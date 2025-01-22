@@ -2,8 +2,7 @@
   <q-item
     clickable
     tag="a"
-    target="_blank"
-    :href="link"
+    @click="navegateToLink"
   >
     <q-item-section
       v-if="icon"
@@ -21,8 +20,8 @@
   </q-item>
 </template>
 
-<script lang="ts">
 
+<script lang="ts">
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -32,22 +31,33 @@ export default defineComponent({
       type: String,
       required: true
     },
-
     caption: {
       type: String,
       default: ''
     },
-
     link: {
       type: String,
       default: '#'
     },
-
     icon: {
       type: String,
       default: ''
     }
+  },
+  setup(props){
+
+    const navegateToLink = () => {
+      if (props.link.startsWith('http')) {
+        window.open(props.link, '_blank')
+      } else {
+        const link = '#/' + props.link
+        window.open(link, '_self')
+      }
+    }
+
+    return {
+      navegateToLink
+    }
   }
 });
-
 </script>
